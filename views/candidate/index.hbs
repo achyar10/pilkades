@@ -1,0 +1,28 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4>{{title}}
+                <div class="float-right">
+                    <a href="/candidate/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
+                        Calon</a>
+                </div>
+            </h4>
+        </div>
+    </div>
+    <div class="row">
+        {{#each data}}
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <img src="{{image}}" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title">{{name}}</h5>
+                    <p class="card-text">No Urut: {{no_urut}}</p>
+                    <a href="/candidate/edit/{{id}}" class="btn btn-primary text-center">Ubah</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+
+</div>

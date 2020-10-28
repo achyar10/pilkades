@@ -1,5 +1,6 @@
 import express from 'express'
 import AuthController from '../controllers/AuthController'
+import CandidateController from '../controllers/CandidateController'
 import HomeController from '../controllers/HomeController'
 import ProfileController from '../controllers/ProfileController'
 import TpsController from '../controllers/TpsController'
@@ -25,6 +26,13 @@ router.route('/tps/add').get(isAuth, TpsController.add)
 router.route('/tps/add').post(isAuth, TpsController.create)
 router.route('/tps/edit/:id').get(isAuth, TpsController.edit)
 router.route('/tps/edit/:id').post(isAuth, TpsController.change)
+
+// Candidate
+router.route('/candidate').get(isAuth, CandidateController.index)
+router.route('/candidate/add').get(isAuth, CandidateController.add)
+router.route('/candidate/add').post(isAuth, CandidateController.create)
+router.route('/candidate/edit/:id').get(isAuth, CandidateController.edit)
+router.route('/candidate/edit/:id').post(isAuth, CandidateController.change)
 
 
 
