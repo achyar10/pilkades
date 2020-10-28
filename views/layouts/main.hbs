@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+    <title>PILKADES | {{title}}</title>
+    <meta content="Admin Dashboard" name="description">
+    <meta content="Themesbrand" name="author">
+    <link rel="shortcut icon" href="/images/logo.png">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/metismenu.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/jquery.dataTables.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <!-- include the style -->
+    <link rel="stylesheet" href="/css/alertify.min.css" />
+    <!-- include a theme -->
+    <link rel="stylesheet" href="/css/alertify-bootstrap.min.css" />
+</head>
+
+<body>
+    <!-- Begin page -->
+    <div id="wrapper">
+        <!-- Top Bar Start -->
+        <div class="topbar">
+            <!-- LOGO -->
+            <div class="topbar-left">
+                <a href="/" class="logo">
+                    <span class="text-white"><img src="/images/logo.png" alt="" height="50"> PILKADES</span>
+                    <i><img src="/images/logo.png" alt="" height="30"></i>
+                </a>
+            </div>
+            <nav class="navbar-custom">
+                <ul class="navbar-right list-inline float-right mb-0">
+                    <li class="dropdown notification-list list-inline-item">
+                        <div class="dropdown notification-list nav-pro-img">
+                            <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user" data-toggle="dropdown"
+                                href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img src="/images/user.jpeg" alt="user" class="rounded-circle">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                                <a class="dropdown-item" href="/profile">
+                                    <i class="mdi mdi-account-circle m-r-5"></i> Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="/logout"><i
+                                        class="mdi mdi-power text-danger"></i> Keluar</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="list-inline menu-left mb-0">
+                    <li class="float-left">
+                        <button class="button-menu-mobile open-left waves-effect"><i class="mdi mdi-menu"></i></button>
+                    </li>
+                </ul>
+            </nav>
+        </div><!-- Top Bar End -->
+        {{> sidebar }}
+        <div class="content-page">
+            <div class="content">
+                <div class="container-fluid">
+                    {{{ body }}}
+                </div>
+            </div>
+
+            <footer class="footer">
+                © <script>document.write(new Date().getFullYear())</script> Achyar Anshorie <span class="d-none d-sm-inline-block">- Alright Reserved</span>.
+            </footer>
+        </div>
+    </div>
+    <!-- jQuery  -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap-datepicker.min.js"></script>
+    <script src="/js/metisMenu.min.js"></script>
+    <script src="/js/jquery.slimscroll.js"></script>
+    <script src="/js/waves.min.js"></script><!-- App js -->
+    <script src="/js/app.js"></script>
+    <script src="/js/jquery.dataTables.min.js"></script>
+    <script src="/js/alertify.min.js"></script>
+    <!-- Page Script -->
+    {{#if success_msg}}
+    <script>
+        let message = "{{success_msg}}"
+        alertify.success(message);
+    </script>
+    {{/if}}
+    {{#if error_msg}}
+    <script>
+        let message = "{{error_msg}}"
+        alertify.error(message);
+    </script>
+    {{/if}}
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".clickable-row").click(function () {
+                window.location = $(this).data("href");
+            });
+        });
+
+        $('.date').datepicker({
+                uiLibrary: 'bootstrap4',
+                autoclose: true,
+                todayHighlight: true,
+                format: 'yyyy-mm-dd',
+                orientation: 'bottom auto'
+            });
+
+        $(document).ready(function () {
+            $('.myTable').DataTable();
+        });
+    </script>
+</body>
+
+</html>

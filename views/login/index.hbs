@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
+    <title>PILKADES | Login</title>
+    <meta content="Admin Dashboard" name="description">
+    <meta content="Themesbrand" name="author">
+    <link rel="shortcut icon" href="/images/logo.png">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/metismenu.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/icons.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div class="wrapper-page">
+        <div class="card overflow-hidden account-card mx-3">
+            <div class="bg-success p-4 text-white text-center position-relative">
+                <h4 class="font-20 m-b-5">PILKADES DASHBOARD</h4>
+            </div>
+            <div class="account-card-content">
+                <div style="position: absolute; top: 60px; left: 150px;">
+                    <img src="/images/logo.png" height="200" alt="" >
+                </div>
+                <br>
+                <form class="form-horizontal mt-5" action="/login" method="post">
+                    <input type="hidden" name="_csrf" value="{{csrf}}">
+                    {{#if error }}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                    {{/if}}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="username" name="username" class="form-control" id="username" placeholder="Masukan username anda"
+                            autofocus="">
+                    </div>
+                    <div class="form-group">
+                        <label for="userpassword">Password</label>
+                        <input type="password" name="password" class="form-control" id="userpassword"
+                            placeholder="Masukan password anda" autocomplete="off">
+                    </div>
+                    <button class="btn btn-success w-md waves-effect waves-light" type="submit">Login</button>
+
+                    <div class="form-group m-t-10 mb-0 row">
+                        <div class="col-12 m-t-20">
+                            <a href="#"><i class="mdi mdi-lock"></i> Forgot Password?</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

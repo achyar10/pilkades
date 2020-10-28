@@ -1,0 +1,36 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h3>{{title}}
+                <div class="float-right">
+                    <a href="/tps/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
+                        TPS</a>
+                </div>
+            </h3>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm myTable">
+            <thead class="thead-dark">
+                <th>No</th>
+                <th>Nomor TPS</th>
+                <th>Penanggung Jawab</th>
+                <th>Alamat</th>
+                <th>Opsi</th>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>{{inc @index}}</td>
+                    <td>{{no_tps}}</td>
+                    <td>{{pic}}</td>
+                    <td>{{address}}</td>
+                    <td>
+                        <a href="/tps/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

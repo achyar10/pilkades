@@ -1,0 +1,34 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4 class="page-title">{{title}}</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">TPS</a></li>
+                <li class="breadcrumb-item">{{title}}</li>
+            </ol>
+        </div>
+    </div>
+    <form action="" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label>Nomor TPS</label>
+                    <input type="text" name="no_tps" class="form-control" placeholder="Masukan Nomor TPS" required="">
+                </div>
+                <div class="form-group">
+                    <label>Alamat TPS</label>
+                    <textarea name="address" placeholder="Masukan Alamat TPS" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Penanggung Jawab</label>
+                    <input type="text" name="pic" class="form-control" placeholder="Masukan Penanggung jawab TPS">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success btn-block mt-4">Simpan</button>
+                <a href="/tps" class="btn btn-secondary btn-block">Kembali</a>
+            </div>
+        </div>
+    </form>
+</div>
