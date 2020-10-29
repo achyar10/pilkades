@@ -38,7 +38,6 @@ class LandingController {
                 el.percent = parseFloat((total_vote / totalVote || 0) * 100).toFixed(2)
                 pie.push({ name: el.name, y: el.percent })
             })
-            console.log(pie)
             return res.render('landing', {
                 title: 'Portal PILKADES Waringin Jaya',
                 layout: false,
