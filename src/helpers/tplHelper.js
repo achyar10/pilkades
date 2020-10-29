@@ -29,6 +29,14 @@ helpers.string = function(str) {
   return str.toString();
 }
 
+helpers.printArray = function (data) {
+  let arr = []
+  for (let i = 0; i < data.length; i++) {
+    arr.push(data[i])
+  }
+  return arr;
+}
+
 helpers.numberFormat = function (value, options) {
   if(!value) return 0;
   // Helper parameters

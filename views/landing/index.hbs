@@ -32,7 +32,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    Portal ini dibuat untuk memberikan pelayanan kepada masyarakat Desa Waringin Jaya untuk mengetahui hasil Pilkades pada 20
+                    Portal ini dibuat untuk memberikan pelayanan kepada masyarakat Desa Waringin Jaya untuk mengetahui
+                    hasil Pilkades pada 20
                     Desember 2020 dengan lebih cepat dan akurat. Data hasil Pilkades
                     entry data merupakan hasil sementara dan bukan hasil final. Jika terdapat kesalahan dalam akan
                     dilakukan perbaikan pada proses rekapitulasi ditingkat atasnya
@@ -44,8 +45,9 @@
             <div class="col-12">
                 <h5>Data masuk: {{tpsData.tps_vote}} dari {{tpsData.total_tps}} TPS</h5>
                 <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: {{tpsData.percent}}%;" aria-valuenow="{{tpsData.percent}}"
-                        aria-valuemin="0" aria-valuemax="100">{{tpsData.percent}}%</div>
+                    <div class="progress-bar" role="progressbar" style="width: {{tpsData.percent}}%;"
+                        aria-valuenow="{{tpsData.percent}}" aria-valuemin="0" aria-valuemax="100">{{tpsData.percent}}%
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,20 +67,20 @@
                             <td>Nama Calon</td>
                             <td>Persentase</td>
                         </tr>
-                        {{#each candidate}}
+                        {{#each candidates}}
                         <tr class="border-bottom">
                             <td class="middle text-center font-weight-bold">{{no_urut}}</td>
-                            <td><img src="{{image}}"
-                                    height="100" width="100" alt=""></td>
+                            <td><img src="{{image}}" height="100" width="100" alt=""></td>
                             <td class="middle">{{name}}</td>
                             <td>
                                 <div class="percentext">{{percent}}%</div>
-                                <div class="text-right">{{votes.total_vote}} suara</div>
+                                <div class="text-right">{{total_vote}} suara</div>
                             </td>
                         </tr>
                         {{/each}}
                         <tr>
-                            <td colspan="3" class="text-center middle text-success font-weight-bold" style="font-size: 25px;">TOTAL</td>
+                            <td colspan="3" class="text-center middle text-success font-weight-bold"
+                                style="font-size: 25px;">TOTAL</td>
                             <td>
                                 <div class="percentext">100%</div>
                                 <div class="text-right">{{totalVote}} suara</div>
@@ -96,7 +98,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="copyright-text">
-                            <p>© <script>document.write(new Date().getFullYear())</script>
+                            <p>©
+                                <script>document.write(new Date().getFullYear())</script>
                                 All rights reserved.
                                 <a href="#">Achyar Anshorie&trade;</a>
                             </p>
@@ -108,6 +111,13 @@
     </footer>
 
     <script>
+        let dataPie = []
+        {{#each pie}}
+            dataPie.push({
+                name: '{{ name }}',
+                y: {{y}}
+            })
+        {{/each}}
         Highcharts.chart('container', {
             chart: {
                 plotBackgroundColor: null,
@@ -119,7 +129,7 @@
                 text: 'Hasil Hitung TPS'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
             },
             credits: {
                 enabled: false
@@ -135,28 +145,14 @@
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        format: '<b>{point.name}</b>: {point.percentage:.2f} %'
                     }
                 }
             },
             series: [{
                 name: 'Calon',
                 colorByPoint: true,
-                data: [{
-                    name: 'NO 1',
-                    y: 45,
-                    sliced: true,
-                    selected: true
-                }, {
-                    name: 'NO 2',
-                    y: 20
-                }, {
-                    name: 'NO 3',
-                    y: 25
-                }, {
-                    name: 'Tidak Sah',
-                    y: 10
-                }]
+                data: dataPie
             }]
         });
     </script>
