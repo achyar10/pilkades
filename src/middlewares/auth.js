@@ -10,13 +10,13 @@ module.exports = {
         if (!req.isAuthenticated()) {
             return next()
         }
-        res.redirect('/');
+        res.redirect('/dashboard');
     },
     isAdmin: function (req, res, next) {
         if (req.user.role == 'admin') {
             return next();
         }
-        res.redirect('/')
+        res.redirect('/dashboard')
     },
     isSuperAccess: function (req, res, next) {
         return next();
