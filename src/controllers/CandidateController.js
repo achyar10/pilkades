@@ -13,7 +13,7 @@ class CandidateController {
 
     index = async (req, res) => {
         try {
-            const data = await model.candidate.findAll({ raw: true })
+            const data = await model.candidate.findAll({ where: { isBlank: false }, raw: true })
             res.render('candidate', {
                 title: 'Daftar Calon',
                 data

@@ -4,6 +4,7 @@ import CandidateController from '../controllers/CandidateController'
 import HomeController from '../controllers/HomeController'
 import ProfileController from '../controllers/ProfileController'
 import TpsController from '../controllers/TpsController'
+import UserController from '../controllers/UserController'
 import VoteController from '../controllers/VoteController'
 import { isAuth, isLogin } from '../middlewares/auth'
 
@@ -41,6 +42,15 @@ router.route('/vote/add').get(isAuth, VoteController.add)
 router.route('/vote/add').post(isAuth, VoteController.create)
 router.route('/vote/edit/:id').get(isAuth, VoteController.edit)
 router.route('/vote/edit/:id').post(isAuth, VoteController.change)
+
+// Users
+router.route('/user').get(isAuth, UserController.index)
+router.route('/user/add').get(isAuth, UserController.add)
+router.route('/user/add').post(isAuth, UserController.create)
+router.route('/user/edit/:id').get(isAuth, UserController.edit)
+router.route('/user/edit/:id').post(isAuth, UserController.change)
+router.route('/user/cpw/:id').get(isAuth, UserController.cpw)
+router.route('/user/cpw/:id').post(isAuth, UserController.cpwProcess)
 
 
 export default router

@@ -11,7 +11,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/tps" class="waves-effect"><i class="ti-home"></i>
+                    <a href="/tps" class="waves-effect"><i class="ti-pencil-alt"></i>
                         <span>TPS</span>
                     </a>
                 </li>
@@ -21,10 +21,17 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/vote" class="waves-effect"><i class="ti-home"></i>
+                    <a href="/vote" class="waves-effect"><i class="ti-files"></i>
                         <span>Perhitungan Suara</span>
                     </a>
                 </li>
+                {{#ifCond user.role "superadmin"}}
+                <li>
+                    <a href="/user" class="waves-effect"><i class="ti-key"></i>
+                        <span>Pengguna</span>
+                    </a>
+                </li>
+                {{/ifCond}}
             </ul>
         </div>
         <div class="clearfix"></div>

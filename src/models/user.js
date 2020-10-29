@@ -13,6 +13,13 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.BOOLEAN,
             defaultValue: true
         }
+    }, {
+        indexes: [
+            {
+                unique: true,
+                fields: ['username']
+            }
+        ]
     })
     user.associate = function (models) {
         user.belongsTo(models.tps, {

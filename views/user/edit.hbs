@@ -1,0 +1,49 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4 class="page-title">{{title}}</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Pengguna</a></li>
+                <li class="breadcrumb-item">{{title}}</li>
+            </ol>
+        </div>
+    </div>
+    <form action="" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label>Username <span class="text-danger">*</span></label>
+                    <input type="text" name="username" class="form-control" placeholder="Masukan Username" required=""
+                        value="{{data.username}}">
+                </div>
+                <div class="form-group">
+                    <label>Nama Lengkap <span class="text-danger">*</span></label>
+                    <input type="text" name="fullname" class="form-control" placeholder="Masukan nama lengkap"
+                        required="" value="{{data.fullname}}">
+                </div>
+                <div class="form-group">
+                    <label>TPS <span class="text-danger">*</span></label>
+                    <select name="tpsId" id="tpsId" class="form-control">
+                        {{#each tps}}
+                        <option value="{{id}}" {{#ifCond id (string ../data.tpsId)}} selected {{/ifCond}}>{{no_tps}}
+                        </option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Role <span class="text-danger">*</span></label>
+                    <select name="role" id="role" class="form-control" required="">
+                        <option value="admin" {{#ifCond data.role "admin"}} selected {{/ifCond}}>Admin</option>
+                        <option value="superadmin" {{#ifCond data.role "superadmin"}} selected {{/ifCond}}>Super Admin
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success btn-block mt-4">Ubah</button>
+                <a href="/user" class="btn btn-secondary btn-block">Kembali</a>
+            </div>
+        </div>
+    </form>
+</div>
