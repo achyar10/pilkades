@@ -92,7 +92,7 @@ class VoteController {
         const { id } = req.params
         const { numberOfVote } = req.body
         try {
-            model.vote.update({ numberOfVote }, { where: { id } })
+            model.vote.update({ numberOfVote, userId: req.user.id }, { where: { id } })
                 .then(() => {
                     req.flash('success_msg', "Ubah data berhasil");
                     res.redirect('/vote')

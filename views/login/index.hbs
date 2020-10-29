@@ -19,13 +19,14 @@
     <div class="wrapper-page">
         <div class="card overflow-hidden account-card mx-3">
             <div class="bg-success p-4 text-white text-center position-relative">
-                <h4 class="font-20 m-b-5">PILKADES DASHBOARD</h4>
+                <h4 class="font-20 m-b-5">PILKADES WARINGIN JAYA</h4>
             </div>
             <div class="account-card-content">
-                <div style="position: absolute; top: 60px; left: 150px;">
-                    <img src="/images/logo.png" height="200" alt="" >
+                <div class="row" style="margin-top: -30px; margin-bottom: -55px;">
+                    <div class="col-md-12">
+                        <img class="mx-auto d-block" src="/images/logo.png" height="100">
+                    </div>
                 </div>
-                <br>
                 <form class="form-horizontal mt-5" action="/login" method="post">
                     <input type="hidden" name="_csrf" value="{{csrf}}">
                     {{#if error }}
@@ -47,12 +48,6 @@
                             placeholder="Masukan password anda" autocomplete="off">
                     </div>
                     <button class="btn btn-success w-md waves-effect waves-light" type="submit">Login</button>
-
-                    <div class="form-group m-t-10 mb-0 row">
-                        <div class="col-12 m-t-20">
-                            <a href="#"><i class="mdi mdi-lock"></i> Forgot Password?</a>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
