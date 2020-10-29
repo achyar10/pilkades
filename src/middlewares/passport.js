@@ -31,6 +31,7 @@ module.exports = function (passport) {
                 if (user) {
                     const session = {
                         id: user.id,
+                        tpsId: user.tpsId,
                         username: user.username,
                         fullname: user.fullname,
                         role: user.role,

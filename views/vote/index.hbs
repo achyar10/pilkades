@@ -1,0 +1,40 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h3>{{title}}
+                <div class="float-right">
+                    <a href="/vote/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
+                        Hitung Suara</a>
+                </div>
+            </h3>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm myTable">
+            <thead class="thead-dark">
+                <th>No</th>
+                <th>Nomor TPS</th>
+                <th>Calon</th>
+                <th>Jumlah Suara</th>
+                <th>Tanggal</th>
+                <th>Penginput</th>
+                <th>Opsi</th>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <td>{{inc @index}}</td>
+                    <td>{{tps.no_tps}}</td>
+                    <td>{{candidate.name}}</td>
+                    <td>{{numberOfVote}}</td>
+                    <td>{{formatDate updatedAt "DD MMM YYYY, HH:mm"}}</td>
+                    <td>{{user.fullname}}</td>
+                    <td>
+                        <a href="/vote/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

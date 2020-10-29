@@ -1,0 +1,46 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4 class="page-title">{{title}}</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Perhitungan Suara</a></li>
+                <li class="breadcrumb-item">{{title}}</li>
+            </ol>
+        </div>
+    </div>
+    <form action="" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="row">
+            <div class="col-md-9">
+                {{#ifCond user.role "superadmin"}}
+                <div class="form-group">
+                    <label>TPS</label>
+                    <select name="tpsId" class="form-control" required="">
+                        <option value="">---Pilih TPS---</option>
+                        {{#each tps}}
+                            <option value="{{id}}">{{no_tps}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                {{/ifCond}}
+                <div class="form-group">
+                    <label>Calon</label>
+                    <select name="candidateId" class="form-control" required="">
+                        <option value="">---Pilih Calon---</option>
+                        {{#each candidates}}
+                            <option value="{{id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Jumlah Suara</label>
+                    <input type="number" name="numberOfVote" class="form-control" placeholder="Jumlah perolehan suara" min="0" required="">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success btn-block mt-4">Simpan</button>
+                <a href="/tps" class="btn btn-secondary btn-block">Kembali</a>
+            </div>
+        </div>
+    </form>
+</div>

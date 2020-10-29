@@ -4,6 +4,7 @@ import CandidateController from '../controllers/CandidateController'
 import HomeController from '../controllers/HomeController'
 import ProfileController from '../controllers/ProfileController'
 import TpsController from '../controllers/TpsController'
+import VoteController from '../controllers/VoteController'
 import { isAuth, isLogin } from '../middlewares/auth'
 
 const router = express.Router()
@@ -34,6 +35,12 @@ router.route('/candidate/add').post(isAuth, CandidateController.create)
 router.route('/candidate/edit/:id').get(isAuth, CandidateController.edit)
 router.route('/candidate/edit/:id').post(isAuth, CandidateController.change)
 
+// Candidate
+router.route('/vote').get(isAuth, VoteController.index)
+router.route('/vote/add').get(isAuth, VoteController.add)
+router.route('/vote/add').post(isAuth, VoteController.create)
+router.route('/vote/edit/:id').get(isAuth, VoteController.edit)
+router.route('/vote/edit/:id').post(isAuth, VoteController.change)
 
 
 export default router

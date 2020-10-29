@@ -1,0 +1,69 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4 class="page-title">{{title}}</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Calon</a></li>
+                <li class="breadcrumb-item">{{title}}</li>
+            </ol>
+        </div>
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="">Nomor Urut Calon</label>
+                    <input type="text" name="no_urut" class="form-control" placeholder="Masukan Nomor urut Calon"
+                        value="{{data.no_urut}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Nama Calon</label>
+                    <input type="text" name="name" class="form-control" placeholder="Masukan Nama Calon"
+                        value="{{data.name}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Visi</label>
+                    <textarea name="vision" class="form-control" placeholder="Masukan visi calon">{{data.vision}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Misi</label>
+                    <textarea name="mission" class="form-control"
+                        placeholder="Masukan misi calon">{{data.mission}}</textarea>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Foto Calon</label>
+                    {{#ifCond data.image null}}
+                    <img src="/images/no_image.png" class="img-thumbnail" id="target" alt="">
+                    {{else}}
+                    <img src="{{data.image}}" class="img-thumbnail" id="target" alt="">
+                    {{/ifCond}}
+                    <input type="file" id="image" name="image">
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Ubah</button>
+                <a href="/candidate" class="btn btn-secondary btn-block">Kembali</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#target').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image").change(function () {
+        readURL(this);
+    });
+
+</script>
