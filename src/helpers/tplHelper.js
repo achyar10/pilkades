@@ -70,6 +70,12 @@ helpers.ifCond = function (v1, v2, options) {
   }
   return options.inverse(this);
 }
+helpers.ifNotEq = function (v1, v2, options) {
+  if (v1 != v2) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
+}
 
 helpers.ifAnd = function (v1, v2, v3, v4, options) {
   if (v1 == v2 && v3 == v4) {

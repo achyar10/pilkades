@@ -4,11 +4,6 @@ class LandingController {
 
     index = async (req, res) => {
         try {
-            const joinCandidate = [{
-                model: model.vote, as: 'votes',
-                attributes: [[model.Sequelize.fn('SUM', model.Sequelize.col('numberOfVote')), 'total_vote'],],
-                // group: ['vote.candidateId']
-            }]
             const [tpsTotal, tpsVote, totalVote, votes, candidates] = await Promise.all([
                 model.tps.count({}),
                 model.vote.count({ group: ['tpsId'] }),
@@ -19,7 +14,7 @@ class LandingController {
                         [model.Sequelize.fn('SUM', model.Sequelize.col('numberOfVote')), 'total_vote'],
                     ], group: ['candidateId'], raw: true
                 }),
-                model.candidate.findAll({ where: { isBlank: false }, attributes: ['id', 'no_urut', 'name', 'image'], order: [['no_urut', 'ASC']], raw: true, nest: true })
+                model.candidate.findAll({ where: { }, attributes: ['id', 'no_urut', 'name', 'image'], order: [['no_urut', 'ASC']], raw: true, nest: true })
             ])
             const tpsData = {
                 total_tps: tpsTotal,
