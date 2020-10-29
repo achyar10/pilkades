@@ -11,7 +11,7 @@ class TpsController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -23,7 +23,7 @@ class TpsController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -41,7 +41,7 @@ class TpsController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -59,7 +59,7 @@ class TpsController {
             return res.redirect('/tps')
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -78,7 +78,7 @@ class TpsController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 

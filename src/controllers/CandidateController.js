@@ -20,7 +20,7 @@ class CandidateController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -32,7 +32,7 @@ class CandidateController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -60,7 +60,7 @@ class CandidateController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -78,7 +78,7 @@ class CandidateController {
             return res.redirect('/candidate')
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -108,7 +108,7 @@ class CandidateController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 

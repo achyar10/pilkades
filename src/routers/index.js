@@ -2,6 +2,7 @@ import express from 'express'
 import AuthController from '../controllers/AuthController'
 import CandidateController from '../controllers/CandidateController'
 import HomeController from '../controllers/HomeController'
+import LandingController from '../controllers/LandingController'
 import ProfileController from '../controllers/ProfileController'
 import TpsController from '../controllers/TpsController'
 import UserController from '../controllers/UserController'
@@ -10,7 +11,9 @@ import { isAuth, isLogin } from '../middlewares/auth'
 
 const router = express.Router()
 
-router.route('/').get(isAuth, HomeController.index)
+router.route('/').get(LandingController.index)
+
+router.route('/dashboard').get(isAuth, HomeController.index)
 
 router.route('/login').get(isLogin, AuthController.getLogin)
 router.route('/login').post(isLogin, AuthController.doLogin)

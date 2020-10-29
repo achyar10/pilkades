@@ -16,7 +16,7 @@ class HomeController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 

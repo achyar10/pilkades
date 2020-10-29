@@ -20,7 +20,7 @@ class VoteController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -35,7 +35,7 @@ class VoteController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -60,7 +60,7 @@ class VoteController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -84,7 +84,7 @@ class VoteController {
             return res.redirect('/vote')
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -104,7 +104,7 @@ class VoteController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 

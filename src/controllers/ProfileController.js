@@ -17,13 +17,13 @@ class ProfileController {
     //     try {
     //         Users.findOneAndUpdate({ _id: req.user._id }, { $set: { password: bcrypt.hashSync(req.body.password, 10) } }, (err) => {
     //             if (err) {
-    //                 res.redirect('/')
+    //                 res.redirect('/dashboard')
     //             }
     //             req.flash('success_msg', "Ubah sandi berhasil");
     //             res.redirect('/profile')
     //         })
     //     } catch (error) {
-    //         res.redirect('/')
+    //         res.redirect('/dashboard')
     //     }
     // }
 

@@ -12,7 +12,7 @@ class UserController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -26,7 +26,7 @@ class UserController {
             })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -45,7 +45,7 @@ class UserController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -64,7 +64,7 @@ class UserController {
             return res.redirect('/user')
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -83,7 +83,7 @@ class UserController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
@@ -114,7 +114,7 @@ class UserController {
                 })
         } catch (error) {
             console.log(error)
-            res.redirect('/')
+            res.redirect('/dashboard')
         }
     }
 
