@@ -3,8 +3,8 @@
         <div class="col-sm-12">
             <h3>{{title}}
                 <div class="float-right">
-                    <a href="/tps/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
-                        TPS</a>
+                    <a href="/district/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
+                        Wilayah</a>
                 </div>
             </h3>
         </div>
@@ -13,24 +13,16 @@
         <table class="table table-sm myTable">
             <thead class="thead-dark">
                 <th>No</th>
-                <th>Wilayah</th>
-                <th>Nomor TPS</th>
-                <th>Total DPT</th>
-                <th>Penanggung Jawab</th>
-                <th>Alamat</th>
+                <th>Nama Wilayah</th>
                 <th>Opsi</th>
             </thead>
             <tbody>
                 {{#each data}}
                 <tr>
                     <td>{{inc @index}}</td>
-                    <td>{{district.name}}</td>
-                    <td>{{no_tps}}</td>
-                    <td>{{total_dpt}}</td>
-                    <td>{{pic}}</td>
-                    <td>{{address}}</td>
+                    <td>{{name}}</td>
                     <td>
-                        <a href="/tps/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
+                        <a href="/district/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
                     </td>
                 </tr>
                 {{/each}}

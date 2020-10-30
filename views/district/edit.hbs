@@ -1,0 +1,27 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4 class="page-title">{{title}}</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Wilayah Pemilihan</a></li>
+                <li class="breadcrumb-item">{{title}}</li>
+            </ol>
+        </div>
+    </div>
+    <form action="" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label>Nama Wilayah</label>
+                    <input type="text" name="name" class="form-control" placeholder="Masukan Tempat Wilayah Pemilihan" required=""
+                        value="{{data.name}}">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-success btn-block mt-4">Ubah</button>
+                <a href="/district" class="btn btn-secondary btn-block">Kembali</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,6 +1,7 @@
 import express from 'express'
 import AuthController from '../controllers/AuthController'
 import CandidateController from '../controllers/CandidateController'
+import DistrictController from '../controllers/DistrictController'
 import HomeController from '../controllers/HomeController'
 import LandingController from '../controllers/LandingController'
 import ProfileController from '../controllers/ProfileController'
@@ -24,6 +25,13 @@ router.route('/profile').get(isAuth, ProfileController.get)
 router.route('/profile/edit').get(isAuth, ProfileController.edit)
 // router.route('/profile/cpw').post(isAuth, ProfileController.cpw)
 // router.route('/profile/edit').post(isAuth, ProfileController.editProcess)
+
+// TPS
+router.route('/district').get(isAuth, DistrictController.index)
+router.route('/district/add').get(isAuth, DistrictController.add)
+router.route('/district/add').post(isAuth, DistrictController.create)
+router.route('/district/edit/:id').get(isAuth, DistrictController.edit)
+router.route('/district/edit/:id').post(isAuth, DistrictController.change)
 
 // TPS
 router.route('/tps').get(isAuth, TpsController.index)

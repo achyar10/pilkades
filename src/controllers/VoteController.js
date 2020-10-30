@@ -1,5 +1,4 @@
 import model from '../models'
-
 class VoteController {
 
     index = async (req, res) => {
@@ -11,7 +10,7 @@ class VoteController {
                 include: [
                     { model: model.user, attributes: ['fullname'] },
                     { model: model.candidate, attributes: ['no_urut', 'name'] },
-                    { model: model.tps, as: 'tps', attributes: ['no_tps'] },
+                    { model: model.tps, as: 'tps', attributes: ['no_tps', 'total_dpt'] },
                 ]
             })
             res.render('vote', {
@@ -40,7 +39,7 @@ class VoteController {
     }
 
     create = async (req, res) => {
-        let { candidateId, tpsId, ...rest } = req.body
+        let { candidateId, tpsId, numberOfVote } = req.body
         try {
             if (req.user.role !== 'superadmin') tpsId = req.user.tpsId
             const check = await model.vote.findOne({ where: { candidateId, tpsId } })
@@ -48,7 +47,21 @@ class VoteController {
                 req.flash('error_msg', "Calon di TPS tersebut sudah pernah di inputkan!");
                 return res.redirect('/vote')
             }
-            model.vote.create({ userId: req.user.id, candidateId, tpsId, ...rest })
+            const checkDist = await model.tps.findOne({ where: { id: tpsId } })
+            if (!checkDist) {
+                req.flash('error_msg', "TPS tidak ditemukan!");
+                return res.redirect('/vote')
+            }
+            const totalIn = await model.vote.sum('numberOfVote', { where: { tpsId } }) || 0
+            if ((totalIn + parseInt(numberOfVote)) > checkDist.total_dpt) {
+                req.flash('error_msg', "Total suara melebihi kapasitas daftar pemilih tetap!");
+                return res.redirect('/vote')
+            }
+            model.vote.create({
+                userId: req.user.id,
+                districtId: checkDist.districtId,
+                candidateId, tpsId, numberOfVote
+            })
                 .then(() => {
                     req.flash('success_msg', "Tambah data berhasil");
                     res.redirect('/vote')
@@ -71,7 +84,7 @@ class VoteController {
                 where: { id },
                 include: [
                     { model: model.candidate, attributes: ['no_urut', 'name'] },
-                    { model: model.tps, as: 'tps', attributes: ['no_tps'] }
+                    { model: model.tps, as: 'tps', attributes: ['no_tps', 'total_dpt'] }
                 ]
             })
             if (data) {
@@ -88,10 +101,16 @@ class VoteController {
         }
     }
 
-    change = (req, res) => {
+    change = async (req, res) => {
         const { id } = req.params
-        const { numberOfVote } = req.body
+        const { numberOfVote, before, total_dpt, tpsId } = req.body
         try {
+            const totalIn = await model.vote.sum('numberOfVote', { where: { tpsId } }) || 0
+            const value = totalIn - parseInt(before)
+            if ((value + parseInt(numberOfVote)) > parseInt(total_dpt)) {
+                req.flash('error_msg', "Total suara melebihi kapasitas daftar pemilih tetap!");
+                return res.redirect('/vote')
+            }
             model.vote.update({ numberOfVote, userId: req.user.id }, { where: { id } })
                 .then(() => {
                     req.flash('success_msg', "Ubah data berhasil");

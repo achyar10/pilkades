@@ -5,6 +5,7 @@ export default (sequelize, DataTypes) => {
     })
     vote.associate = function (models) {
         vote.belongsTo(models.candidate)
+        vote.belongsTo(models.district)
         vote.belongsTo(models.tps, { as: 'tps' })
         vote.belongsTo(models.user)
     }

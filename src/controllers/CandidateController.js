@@ -42,9 +42,11 @@ class CandidateController {
             const nameImage = new Date().getTime()
             const upload = await v2.uploader.upload(req.files.image.tempFilePath, {
                 folder: 'pilkades/candidate',
+                quality: "auto:low",
                 public_id: nameImage,
                 format: 'png',
-                overwrite: true
+                overwrite: true,
+                width: 300, height: 300, crop: "fill"
             })
             model.candidate.create({
                 image: upload.secure_url, ...rest
@@ -90,9 +92,11 @@ class CandidateController {
                 const nameImage = new Date().getTime()
                 const upload = await v2.uploader.upload(req.files.image.tempFilePath, {
                     folder: 'pilkades/candidate',
+                    quality: "auto:low",
                     public_id: nameImage,
                     format: 'png',
-                    overwrite: true
+                    overwrite: true,
+                    width: 300, height: 300, crop: "fill"
                 })
                 updated = { ...updated, image: upload.secure_url }
             }

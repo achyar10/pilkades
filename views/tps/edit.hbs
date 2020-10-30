@@ -8,10 +8,20 @@
             </ol>
         </div>
     </div>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="{{csrf}}">
         <div class="row">
             <div class="col-md-9">
+                <div class="form-group">
+                    <label>Wilayah Pemilihan <span class="text-danger">*</span></label>
+                    <select name="districtId" id="districtId" class="form-control" required>
+                        <option value="">---Pilih Wilayah---</option>
+                        {{#each districts}}
+                        <option value="{{id}}" {{#ifCond id ../data.districtId}} selected {{/ifCond}}>{{name}}
+                        </option>
+                        {{/each}}
+                    </select>
+                </div>
                 <div class="form-group">
                     <label>Nomor TPS</label>
                     <input type="text" name="no_tps" class="form-control" placeholder="Masukan Nomor TPS" value="{{data.no_tps}}" required="">
@@ -24,11 +34,42 @@
                     <label>Penanggung Jawab</label>
                     <input type="text" name="pic" class="form-control" placeholder="Masukan Penanggung jawab TPS" value="{{data.pic}}">
                 </div>
+                <div class="form-group">
+                    <label>Total Daftar Pemilih Tetap</label>
+                    <input type="text" name="total_dpt" class="form-control" placeholder="Masukan total DPT" value="{{data.total_dpt}}">
+                </div>
             </div>
             <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Plano</label>
+                    {{#ifCond data.plano null}}
+                    <img src="/images/no_image.png" class="img-thumbnail" id="target" alt="">
+                    {{else}}
+                    <img src="{{data.plano}}" class="img-thumbnail" id="target" alt="">
+                    {{/ifCond}}
+                    <input type="file" id="plano" name="plano">
+                </div>
                 <button type="submit" class="btn btn-success btn-block mt-4">Ubah</button>
                 <a href="/tps" class="btn btn-secondary btn-block">Kembali</a>
             </div>
         </div>
     </form>
 </div>
+
+<script>
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#target').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#plano").change(function () {
+        readURL(this);
+    });
+
+</script>

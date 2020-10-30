@@ -13,6 +13,15 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="form-group">
+                    <label>Wilayah Pemilihan <span class="text-danger">*</span></label>
+                    <select name="districtId" id="districtId" class="form-control" required="">
+                        <option value="">---Pilih Wilayah---</option>
+                        {{#each districts}}
+                        <option value="{{id}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
                     <label>Nomor TPS</label>
                     <input type="text" name="no_tps" class="form-control" placeholder="Masukan Nomor TPS" required="">
                 </div>
@@ -23,6 +32,10 @@
                 <div class="form-group">
                     <label>Penanggung Jawab</label>
                     <input type="text" name="pic" class="form-control" placeholder="Masukan Penanggung jawab TPS">
+                </div>
+                <div class="form-group">
+                    <label>Total Daftar Pemilih Tetap</label>
+                    <input type="text" name="total_dpt" class="form-control" placeholder="Masukan total DPT">
                 </div>
             </div>
             <div class="col-md-3">

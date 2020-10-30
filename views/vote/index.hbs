@@ -15,6 +15,7 @@
                 <th>No</th>
                 <th>Nomor TPS</th>
                 <th>Calon</th>
+                <th>Total DPT</th>
                 <th>Jumlah Suara</th>
                 <th>Tanggal</th>
                 <th>Penginput</th>
@@ -26,8 +27,9 @@
                     <td>{{inc @index}}</td>
                     <td>{{tps.no_tps}}</td>
                     <td>{{candidate.name}}</td>
-                    <td>{{numberOfVote}}</td>
-                    <td>{{formatDate updatedAt "DD MMM YYYY, HH:mm"}}</td>
+                    <td>{{numberFormat tps.total_dpt}}</td>
+                    <td>{{numberFormat numberOfVote}}</td>
+                    <td>{{formatDate updatedAt "DD MMM YYYY"}}</td>
                     <td>{{user.fullname}}</td>
                     <td>
                         <a href="/vote/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
