@@ -14,7 +14,7 @@ class LandingController {
                         [model.Sequelize.fn('SUM', model.Sequelize.col('numberOfVote')), 'total_vote'],
                     ], group: ['candidateId'], raw: true
                 }),
-                model.candidate.findAll({ where: { }, attributes: ['id', 'no_urut', 'name', 'image'], order: [['no_urut', 'ASC']], raw: true, nest: true })
+                model.candidate.findAll({ where: {}, attributes: ['id', 'no_urut', 'name', 'image'], order: [['no_urut', 'ASC']], raw: true, nest: true })
             ])
             const tpsData = {
                 total_tps: tpsTotal,
@@ -41,6 +41,48 @@ class LandingController {
         } catch (error) {
             console.log(error)
             res.redirect('/')
+        }
+    }
+
+    detail = async (req, res) => {
+        try {
+            const districts = await model.district.findAll({
+                attributes: ['id', 'name'],
+                include: [{ model: model.tps, as: 'tps', attributes: ['id', 'no_tps', 'total_dpt', 'plano'] }]
+            })
+            const candidates = await model.candidate.findAll({ attributes: ['id', 'name', 'no_urut'], order: [['no_urut', 'ASC']] })
+            const votes = await model.vote.findAll({ attributes: ['tpsId', 'candidateId', 'numberOfVote'] })
+
+            let response = []
+            for (const d of districts) {
+                let dataTps = []
+                for (const tps of d.tps) {
+                    let dataCan = [], total_suara_tps = 0
+                    for (const c of candidates) {
+                        let total_suara = 0
+                        for (const v of votes) {
+                            if (c.id == v.candidateId && tps.id == v.tpsId) {
+                                total_suara += v.numberOfVote
+                                total_suara_tps += v.numberOfVote
+                            }
+                        }
+                        dataCan.push({ id: c.id, name: c.name, total_suara, percent: parseFloat((total_suara / tps.total_dpt) * 100).toFixed(2) })
+                    }
+                    dataTps.push({
+                        no_tps: tps.no_tps,
+                        total_dpt: tps.total_dpt,
+                        absen: tps.total_dpt - total_suara_tps,
+                        plano: tps.plano,
+                        candidates: dataCan
+                    })
+                }
+                response.push({ name: d.name, tps: dataTps })
+            }
+
+            return res.json(response)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json('Internal server error!')
         }
     }
 

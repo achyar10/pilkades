@@ -13,6 +13,7 @@ import { isAuth, isLogin } from '../middlewares/auth'
 const router = express.Router()
 
 router.route('/').get(LandingController.index)
+router.route('/result/detail').get(LandingController.detail)
 
 router.route('/dashboard').get(isAuth, HomeController.index)
 
