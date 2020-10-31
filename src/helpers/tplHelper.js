@@ -29,12 +29,8 @@ helpers.string = function(str) {
   return str.toString();
 }
 
-helpers.printArray = function (data) {
-  let arr = []
-  for (let i = 0; i < data.length; i++) {
-    arr.push(data[i])
-  }
-  return arr;
+helpers.Length = function (arr) {
+  return arr.length;
 }
 
 helpers.numberFormat = function (value, options) {
