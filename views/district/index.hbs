@@ -3,8 +3,10 @@
         <div class="col-sm-12">
             <h3>{{title}}
                 <div class="float-right">
+                    {{#ifCond user.role "superadmin"}}
                     <a href="/district/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
                         Wilayah</a>
+                        {{/ifCond}}
                 </div>
             </h3>
         </div>
@@ -14,16 +16,20 @@
             <thead class="thead-dark">
                 <th>No</th>
                 <th>Nama Wilayah</th>
+                {{#ifCond user.role "superadmin"}}
                 <th>Opsi</th>
+                {{/ifCond}}
             </thead>
             <tbody>
                 {{#each data}}
                 <tr>
                     <td>{{inc @index}}</td>
                     <td>{{name}}</td>
+                    {{#ifCond ../user.role "superadmin"}}
                     <td>
                         <a href="/district/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
                     </td>
+                    {{/ifCond}}
                 </tr>
                 {{/each}}
             </tbody>

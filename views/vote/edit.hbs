@@ -25,6 +25,7 @@
                     <label>Calon</label>
                     <input type="text" class="form-control" value="{{data.candidate.name}}" readonly="">
                 </div>
+                {{#if settings.app_gender}}
                 <div id="gender">
                     <div class="form-group">
                         <label>Jumlah Suara Laki-laki <span class="text-danger">*</span></label>
@@ -37,6 +38,7 @@
                             required="" value="{{data.female}}" oninput="sumTotal()">
                     </div>
                 </div>
+                {{/if}}
                 <div class="form-group">
                     <label>Jumlah Suara</label>
                     <input type="number" name="numberOfVote" class="form-control" placeholder="Jumlah perolehan suara"
@@ -58,6 +60,7 @@
     const total = document.getElementById('numberOfVote')
     const candidateId = {{data.candidateId}}
     const gender = document.querySelector('#gender')
+    const setting = {{settings.app_gender}}
     invalid()
 
     function invalid() {
@@ -65,8 +68,12 @@
             total.readOnly = false
             gender.style.display = 'none'
         } else {
-            total.readOnly = true
-            gender.style.display = 'block'
+            if(setting) {
+                total.readOnly = true
+                gender.style.display = 'block'    
+            } else {
+                total.readOnly = false
+            }
         }
     }
 

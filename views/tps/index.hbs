@@ -3,8 +3,10 @@
         <div class="col-sm-12">
             <h3>{{title}}
                 <div class="float-right">
+                    {{#ifCond user.role "superadmin"}}
                     <a href="/tps/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
                         TPS</a>
+                    {{/ifCond}}
                 </div>
             </h3>
         </div>
@@ -30,7 +32,9 @@
                     <td>{{pic}}</td>
                     <td>{{address}}</td>
                     <td>
+                        {{#ifCond ../user.role "superadmin"}}
                         <a href="/tps/edit/{{id}}" class="btn btn-success btn-sm">Ubah</a>
+                        {{/ifCond}}
                     </td>
                 </tr>
                 {{/each}}

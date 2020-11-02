@@ -3,8 +3,10 @@
         <div class="col-sm-12">
             <h4>{{title}}
                 <div class="float-right">
+                    {{#ifCond user.role "superadmin"}}
                     <a href="/candidate/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
                         Calon</a>
+                    {{/ifCond}}
                 </div>
             </h4>
         </div>
@@ -17,7 +19,9 @@
                 <div class="card-body">
                     <h5 class="card-title">{{name}}</h5>
                     <p class="card-text">No Urut: {{no_urut}}</p>
+                    {{#ifCond ../user.role "superadmin"}}
                     <a href="/candidate/edit/{{id}}" class="btn btn-primary text-center">Ubah</a>
+                    {{/ifCond}}
                 </div>
             </div>
         </div>

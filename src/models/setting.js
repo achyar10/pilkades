@@ -10,6 +10,10 @@ export default (sequelize, DataTypes) => {
             values: ['panitia', 'timses'],
             defaultValue: 'panitia'
         },
+        app_gender: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     })
     return setting;
 }
