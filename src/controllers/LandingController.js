@@ -4,6 +4,7 @@ import axios from 'axios'
 class LandingController {
 
     index = async (req, res) => {
+        const { districtId } = req.query
         try {
             const [tpsTotal, tpsVote, totalVote, votes, candidates, districts] = await Promise.all([
                 model.tps.count({}),
@@ -36,12 +37,13 @@ class LandingController {
                 pie.push({ name: (el.no_urut == 99 ? el.name : `No Urut ${el.no_urut}`), y: el.percent })
             })
             const invalidVote = candidates[candidates.length - 1].total_vote, invalidPercent = candidates[candidates.length - 1].percent
-            const hit = await axios.get(`http://${req.headers.host}/result/detail`)
+            const hit = await axios.get(`http://${req.headers.host}/result/detail?districtId=${(districtId) ? districtId : ''}`)
             return res.render('landing', {
-                title: 'Portal PILKADES Waringin Jaya',
+                title: `Portal ${res.locals.settings.app_name}`,
                 layout: false,
                 tpsData, candidates, totalVote: totalVote || 0, pie, invalidVote, invalidPercent,
-                api: hit.data, districts
+                api: hit.data, districts,
+                districtId
             })
         } catch (error) {
             console.log(error)
@@ -139,20 +141,22 @@ class LandingController {
                 attributes: ['id', 'no_tps', 'total_dpt', 'plano'],
             })
             const candidates = await model.candidate.findAll({ attributes: ['id', 'name', 'no_urut'], order: [['no_urut', 'ASC']] })
-            const votes = await model.vote.findAll({ attributes: ['tpsId', 'candidateId', 'numberOfVote'] })
+            const votes = await model.vote.findAll({ attributes: ['tpsId', 'candidateId', 'numberOfVote', 'male', 'female'] })
 
             let dataTps = []
             for (const tps of tpss) {
                 let dataCan = [], total_suara_tps = 0
                 for (const c of candidates) {
-                    let total_suara = 0
+                    let total_suara = 0, total_male = 0, total_female = 0
                     for (const v of votes) {
                         if (c.id == v.candidateId && tps.id == v.tpsId) {
                             total_suara += v.numberOfVote
                             total_suara_tps += v.numberOfVote
+                            total_male += v.male
+                            total_female += v.female
                         }
                     }
-                    dataCan.push({ id: c.id, name: c.name, total_suara, percent: parseFloat((total_suara / tps.total_dpt) * 100).toFixed(2) })
+                    dataCan.push({ id: c.id, name: c.name, total_male, total_female, total_suara, percent: parseFloat((total_suara / tps.total_dpt) * 100).toFixed(2) })
                 }
                 dataTps.push({
                     no_tps: tps.no_tps,
@@ -194,29 +198,35 @@ class LandingController {
     }
 
     details = async (req, res) => {
+        const { districtId } = req.query
         try {
+            let query = {}
+            if (districtId) query = { districtId }
             const tpss = await model.tps.findAll({
+                where: query,
                 as: 'tps',
                 attributes: ['id', 'no_tps', 'total_dpt', 'plano'],
             })
             const candidates = await model.candidate.findAll({ attributes: ['id', 'name', 'no_urut'], order: [['no_urut', 'ASC']] })
-            const votes = await model.vote.findAll({ attributes: ['tpsId', 'candidateId', 'numberOfVote'] })
+            const votes = await model.vote.findAll({ attributes: ['tpsId', 'candidateId', 'numberOfVote', 'male', 'female'] })
 
             let dataTps = []
             for (const tps of tpss) {
                 let dataCan = [], total_suara_tps = 0
                 for (const c of candidates) {
-                    let total_suara = 0, grand_total = 0
+                    let total_suara = 0, grand_total = 0, total_male = 0, total_female = 0
                     for (const v of votes) {
                         if (c.id == v.candidateId && tps.id == v.tpsId) {
                             total_suara += v.numberOfVote
                             total_suara_tps += v.numberOfVote
+                            total_male += v.male
+                            total_female += v.female
                         }
                         if (tps.id == v.tpsId) {
                             grand_total += v.numberOfVote
                         }
                     }
-                    dataCan.push({ id: c.id, no_urut: c.no_urut, name: c.name, total_suara, percent: parseFloat((total_suara / grand_total || 0) * 100).toFixed(2) })
+                    dataCan.push({ id: c.id, no_urut: c.no_urut, name: c.name, total_male, total_female, total_suara, percent: parseFloat((total_suara / grand_total || 0) * 100).toFixed(2) })
                 }
                 dataTps.push({
                     no_tps: tps.no_tps,

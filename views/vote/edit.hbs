@@ -25,10 +25,22 @@
                     <label>Calon</label>
                     <input type="text" class="form-control" value="{{data.candidate.name}}" readonly="">
                 </div>
+                <div id="gender">
+                    <div class="form-group">
+                        <label>Jumlah Suara Laki-laki <span class="text-danger">*</span></label>
+                        <input type="number" name="male" id="male" class="form-control" placeholder="Jumlah perolehan suara" min="0"
+                            required="" oninput="sumTotal()" value="{{data.male}}">
+                    </div>
+                    <div class="form-group">
+                        <label>Jumlah Suara Perempuan <span class="text-danger">*</span></label>
+                        <input type="number" name="female" id="female" class="form-control" placeholder="Jumlah perolehan suara" min="0"
+                            required="" value="{{data.female}}" oninput="sumTotal()">
+                    </div>
+                </div>
                 <div class="form-group">
                     <label>Jumlah Suara</label>
                     <input type="number" name="numberOfVote" class="form-control" placeholder="Jumlah perolehan suara"
-                        min="0" required="" value="{{data.numberOfVote}}">
+                        min="0" required="" id="numberOfVote" value="{{data.numberOfVote}}" readonly="">
                 </div>
             </div>
             <div class="col-md-3">
@@ -38,3 +50,31 @@
         </div>
     </form>
 </div>
+
+<script>
+
+    const male = document.getElementById('male')
+    const female = document.getElementById('female')
+    const total = document.getElementById('numberOfVote')
+    const candidateId = {{data.candidateId}}
+    const gender = document.querySelector('#gender')
+    invalid()
+
+    function invalid() {
+        if (candidateId == 1) {
+            total.readOnly = false
+            gender.style.display = 'none'
+        } else {
+            total.readOnly = true
+            gender.style.display = 'block'
+        }
+    }
+
+    function sumTotal() {
+        const totalMale = parseInt(male.value)
+        const totalFemale = parseInt(female.value)
+        const sum = totalMale + totalFemale
+        return total.value = sum || 0
+    }
+
+</script>

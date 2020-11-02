@@ -5,10 +5,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimal-ui">
-    <title>PILKADES | Login</title>
-    <meta content="Admin Dashboard" name="description">
-    <meta content="Themesbrand" name="author">
+    <title>{{settings.app_name}} | Login</title>
+    {{#ifCond settings.app_logo null}}
     <link rel="shortcut icon" href="/images/logo.png">
+    {{else}}
+    <link rel="shortcut icon" href="{{setting.app_logo}}">
+    {{/ifCond}}
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/metismenu.min.css" rel="stylesheet" type="text/css">
     <link href="/css/icons.css" rel="stylesheet" type="text/css">
@@ -19,12 +21,16 @@
     <div class="wrapper-page">
         <div class="card overflow-hidden account-card mx-3">
             <div class="bg-success p-4 text-white text-center position-relative">
-                <h4 class="font-20 m-b-5">PILKADES WARINGIN JAYA</h4>
+                <h4 class="font-20 m-b-5">{{settings.app_name}}</h4>
             </div>
             <div class="account-card-content">
                 <div class="row" style="margin-top: -30px; margin-bottom: -55px;">
                     <div class="col-md-12">
+                        {{#ifCond settings.app_logo null}}
                         <img class="mx-auto d-block" src="/images/logo.png" height="100">
+                        {{else}}
+                        <img class="mx-auto d-block" src="{{settings.app_logo}}" height="100">
+                        {{/ifCond}}
                     </div>
                 </div>
                 <form class="form-horizontal mt-5" action="/login" method="post">

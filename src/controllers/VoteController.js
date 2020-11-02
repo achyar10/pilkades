@@ -39,7 +39,7 @@ class VoteController {
     }
 
     create = async (req, res) => {
-        let { candidateId, tpsId, numberOfVote } = req.body
+        let { candidateId, tpsId, numberOfVote, male, female } = req.body
         try {
             if (req.user.role !== 'superadmin') tpsId = req.user.tpsId
             const check = await model.vote.findOne({ where: { candidateId, tpsId } })
@@ -60,7 +60,7 @@ class VoteController {
             model.vote.create({
                 userId: req.user.id,
                 districtId: checkDist.districtId,
-                candidateId, tpsId, numberOfVote
+                candidateId, tpsId, numberOfVote, male, female
             })
                 .then(() => {
                     req.flash('success_msg', "Tambah data berhasil");
@@ -103,7 +103,7 @@ class VoteController {
 
     change = async (req, res) => {
         const { id } = req.params
-        const { numberOfVote, before, total_dpt, tpsId } = req.body
+        const { numberOfVote, before, total_dpt, tpsId, male, female } = req.body
         try {
             const totalIn = await model.vote.sum('numberOfVote', { where: { tpsId } }) || 0
             const value = totalIn - parseInt(before)
@@ -111,7 +111,7 @@ class VoteController {
                 req.flash('error_msg', "Total suara melebihi kapasitas daftar pemilih tetap!");
                 return res.redirect('/vote')
             }
-            model.vote.update({ numberOfVote, userId: req.user.id }, { where: { id } })
+            model.vote.update({ male, female, numberOfVote, userId: req.user.id }, { where: { id } })
                 .then(() => {
                     req.flash('success_msg', "Ubah data berhasil");
                     res.redirect('/vote')

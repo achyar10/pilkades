@@ -5,6 +5,7 @@ import DistrictController from '../controllers/DistrictController'
 import HomeController from '../controllers/HomeController'
 import LandingController from '../controllers/LandingController'
 import ProfileController from '../controllers/ProfileController'
+import SettingController from '../controllers/SettingController'
 import TpsController from '../controllers/TpsController'
 import UserController from '../controllers/UserController'
 import VoteController from '../controllers/VoteController'
@@ -28,7 +29,7 @@ router.route('/profile/edit').get(isAuth, ProfileController.edit)
 // router.route('/profile/cpw').post(isAuth, ProfileController.cpw)
 // router.route('/profile/edit').post(isAuth, ProfileController.editProcess)
 
-// TPS
+// District
 router.route('/district').get(isAuth, DistrictController.index)
 router.route('/district/add').get(isAuth, DistrictController.add)
 router.route('/district/add').post(isAuth, DistrictController.create)
@@ -49,7 +50,7 @@ router.route('/candidate/add').post(isAuth, CandidateController.create)
 router.route('/candidate/edit/:id').get(isAuth, CandidateController.edit)
 router.route('/candidate/edit/:id').post(isAuth, CandidateController.change)
 
-// Candidate
+// Vote
 router.route('/vote').get(isAuth, VoteController.index)
 router.route('/vote/add').get(isAuth, VoteController.add)
 router.route('/vote/add').post(isAuth, VoteController.create)
@@ -64,6 +65,11 @@ router.route('/user/edit/:id').get(isAuth, UserController.edit)
 router.route('/user/edit/:id').post(isAuth, UserController.change)
 router.route('/user/cpw/:id').get(isAuth, UserController.cpw)
 router.route('/user/cpw/:id').post(isAuth, UserController.cpwProcess)
+
+// Setting
+router.route('/setting').get(isAuth, SettingController.index)
+router.route('/setting').post(isAuth, SettingController.change)
+
 
 
 export default router

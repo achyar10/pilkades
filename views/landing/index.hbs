@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+    {{#ifCond settings.app_logo null}}
+    <link rel="shortcut icon" href="/images/logo.png">
+    {{else}}
+    <link rel="shortcut icon" href="{{setting.app_logo}}">
+    {{/ifCond}}
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,400;0,500;0,600;1,100&display=swap"
         rel="stylesheet">
@@ -21,22 +25,21 @@
 <body>
     <nav class="navbar navbar-light bg-success sticky-top">
         <a class="navbar-brand" href="/">
-            <img src="/images/logo.png" height="50" class="d-inline-block align-top" alt=""
-                style="position: absolute; top: 5px;">
-            <span class="ml-5 text-white font-weight-bold">PILKADES WARINGIN JAYA</span>
+            {{#ifCond settings.app_logo null}}
+            <img src="/images/logo.png" height="50" alt="">
+            {{else}}
+            <img src="{{settings.app_logo}}" height="50" alt="">
+            {{/ifCond}}
+            <span class="text-white font-weight-bold">{{settings.app_name}}</span>
         </a>
     </nav>
     <div class="container mt-4">
-        <h2>PANITIA PILKADES TINGKAT DESA WARINGIN JAYA</h2>
-        <p>Kecamatan Bojonggede Kabupaten Bogor Tahun 2020</p>
+        <h2>{{settings.app_name}}</h2>
+        <p>{{settings.app_location}} Tahun {{settings.app_year}}</p>
         <div class="row">
             <div class="col-12">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    Portal ini dibuat untuk memberikan pelayanan kepada masyarakat Desa Waringin Jaya untuk mengetahui
-                    hasil Pilkades pada 20
-                    Desember 2020 dengan lebih cepat dan akurat. Data hasil Pilkades
-                    entry data merupakan hasil sementara dan bukan hasil final. Jika terdapat kesalahan dalam form C1 maka akan
-                    dilakukan perbaikan pada proses rekapitulasi ditingkat atasnya
+                    {{settings.app_alert}}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -104,10 +107,10 @@
         <form action="" method="get">
             <div class="form-group">
                 <label for="">Wilayah Pemilihan</label>
-                <select name="" id="" class="form-control">
+                <select name="districtId" id="" class="form-control" onchange="this.form.submit()">
                     <option value="">Semua Wilayah Pemilihan</option>
                     {{#each districts}}
-                        <option value="{{id}}">{{name}}</option>
+                        <option value="{{id}}" {{#ifCond id ../districtId}} selected {{/ifCond}}>{{name}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -116,15 +119,20 @@
             <table class="table table-sm table-bordered table-hover">
                 <thead class="bg-success text-white text-center">
                     <tr>
-                        <th>No</th>
-                        <th>TPS</th>
-                        <th>Total DPT</th>
-                        <th>Tidak Hadir</th>
-                        <th>Total Suara</th>
-                        <th>No Urut Calon</th>
-                        <th>Nama Calon</th>
-                        <th>Hasil</th>
-                        <th>Persentase</th>
+                        <th class="align-middle" rowspan="2">No</th>
+                        <th class="align-middle" rowspan="2">TPS</th>
+                        <th class="align-middle" rowspan="2">Total DPT</th>
+                        <th class="align-middle" rowspan="2">Tidak Hadir</th>
+                        <th class="align-middle" rowspan="2">Total Suara</th>
+                        <th class="align-middle" rowspan="2">No Urut Calon</th>
+                        <th class="align-middle" rowspan="2">Nama Calon</th>
+                        <th colspan="2">Jumlah Suara</th>
+                        <th class="align-middle" rowspan="2">Total</th>
+                        <th class="align-middle" rowspan="2">Persentase</th>
+                    </tr>
+                    <tr>
+                        <th>Laki-laki</th>
+                        <th>Perempuan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -134,7 +142,7 @@
                             <td rowspan="{{Length candidates}}" class="align-middle">
                                 {{no_tps}} <br>
                                 {{#ifNotEq plano null}}
-                                    <a href="{{plano}}" class="btn btn-sm btn-info">Unduh Plano</a>
+                                    <a href="{{plano}}" target="_blank" class="btn btn-sm btn-info">Unduh Plano</a>
                                 {{/ifNotEq}}
                             </td>
                             <td rowspan="{{Length candidates}}" class="text-center align-middle">{{numberFormat total_dpt}}</td>
@@ -144,12 +152,17 @@
                                 {{#ifNotEq no_urut 99}}
                                     <td>No {{no_urut}}</td>
                                     <td>{{name}}</td>
+                                    <td class="text-center font-weight-bold">{{numberFormat total_male}}</td>
+                                    <td class="text-center font-weight-bold">{{numberFormat total_female}}</td>
+                                    <td class="text-center font-weight-bold">{{numberFormat total_suara}}</td>
+                                    <td class="text-center font-weight-bold">{{percent}}%</td>
+                                    </tr>
                                 {{else}}
-                                    <td colspan="2" class="text-center text-danger">{{name}}</td>
+                                    <td colspan="2" class="text-center text-danger">Total {{name}}</td>
+                                    <td colspan="3" class="text-center font-weight-bold text-danger">{{numberFormat total_suara}}</td>
+                                    <td class="text-center font-weight-bold text-danger">{{percent}}%</td>
+                                    </tr>
                                 {{/ifNotEq}}
-                                <td class="text-center font-weight-bold">{{numberFormat total_suara}}</td>
-                                <td class="text-center font-weight-bold">{{percent}}%</td>
-                                </tr>
                             {{/each}}
                             </tr>
                         </tr>

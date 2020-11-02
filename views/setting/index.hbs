@@ -1,0 +1,74 @@
+<div class="page-title-box">
+    <div class="row align-items-center mb-3">
+        <div class="col-sm-12">
+            <h4 class="page-title">{{title}}</h4>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0);">Pengaturan</a></li>
+                <li class="breadcrumb-item">{{title}}</li>
+            </ol>
+        </div>
+    </div>
+    <form action="" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="">Digunakan Untuk</label>
+                    <select name="app_type" id="">
+                        <option value="panitia" {{#ifCond data.app_type "panitia"}} selected {{/ifCond}}>Panitia</option>
+                        <option value="timses" {{#ifCond data.app_type "timses"}} selected {{/ifCond}}>Calon / Tim Sukses Calon</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Nama Aplikasi / Judul</label>
+                    <input type="text" name="app_name" class="form-control"
+                        value="{{data.app_name}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Pesan Pemberitahuan</label>
+                    <textarea name="app_alert" class="form-control" rows="5">{{data.app_alert}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="">Kecamatan & Kabupaten</label>
+                    <input type="text" name="app_location" class="form-control" value="{{data.app_location}}">
+                </div>
+                <div class="form-group">
+                    <label for="">Tahun / Periode</label>
+                    <input type="text" name="app_year" class="form-control" value="{{data.app_year}}">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="">Logo</label>
+                    {{#ifCond data.app_logo null}}
+                    <img src="/images/logo.png" class="img-thumbnail" id="target" alt="">
+                    {{else}}
+                    <img src="{{data.app_logo}}" class="img-thumbnail" id="target" alt="">
+                    {{/ifCond}}
+                    <input type="file" id="app_logo" name="app_logo">
+                </div>
+                <button type="submit" class="btn btn-success btn-block">Simpan</button>
+                <a href="/setting" class="btn btn-secondary btn-block">Kembali</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#target').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#app_logo").change(function () {
+        readURL(this);
+    });
+
+</script>

@@ -1,5 +1,4 @@
 import passport from 'passport'
-
 class AuthController {
 
     getLogin = (req, res) => {

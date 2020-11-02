@@ -63,8 +63,9 @@ app.use(csrf())
 app.use(flash())
 
 // Global variables
-app.use(function (req, res, next) {
+app.use(async function (req, res, next) {
     res.locals.user = req.user
+    res.locals.settings = await model.setting.findOne({ where: { id: 1 }, raw: true })
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');

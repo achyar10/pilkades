@@ -1,7 +1,18 @@
 import sequelizePaginate from 'sequelize-paginate'
 export default (sequelize, DataTypes) => {
     const vote = sequelize.define('vote', {
-        numberOfVote: DataTypes.INTEGER
+        male: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        female: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        numberOfVote: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        }
     })
     vote.associate = function (models) {
         vote.belongsTo(models.candidate)
