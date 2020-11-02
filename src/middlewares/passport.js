@@ -5,7 +5,7 @@ const LocalStrategy = require('passport-local').Strategy
 module.exports = function (passport) {
     passport.use(
         new LocalStrategy({ usernameField: 'username' }, (username, password, done) => {
-            model.user.findOne({ where: { username } }).then(user => {
+            model.user.findOne({ where: { username: username.toLowerCase() } }).then(user => {
                 if (!user) {
                     return done(null, false, { message: 'Username tidak terdaftar' })
                 }

@@ -31,9 +31,9 @@ class UserController {
     }
 
     create = (req, res) => {
-        const { password, ...rest } = req.body
+        const { username, password, ...rest } = req.body
         try {
-            model.user.create({ password: bcrypt.hashSync(password, 10), ...rest })
+            model.user.create({ username: username.toLowerCase(), password: bcrypt.hashSync(password, 10), ...rest })
                 .then(() => {
                     req.flash('success_msg', "Tambah data berhasil");
                     res.redirect('/user')

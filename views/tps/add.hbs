@@ -8,7 +8,7 @@
             </ol>
         </div>
     </div>
-    <form action="" method="post">
+    <form action="" method="post" onsubmit="this.submit_button.disabled = true;">
         <input type="hidden" name="_csrf" value="{{csrf}}">
         <div class="row">
             <div class="col-md-9">
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <button type="submit" class="btn btn-success btn-block mt-4">Simpan</button>
+                <button name="submit_button" type="submit" class="btn btn-success btn-block mt-4">Simpan</button>
                 <a href="/tps" class="btn btn-secondary btn-block">Kembali</a>
             </div>
         </div>
