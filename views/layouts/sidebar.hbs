@@ -5,6 +5,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
                 <li class="menu-title"></li>
+                {{#ifCond user.role "superadmin"}}
                 <li>
                     <a href="/dashboard" class="waves-effect"><i class="ti-home"></i>
                         <span>Dashboard</span>
@@ -30,7 +31,6 @@
                         <span>Perhitungan Suara</span>
                     </a>
                 </li>
-                {{#ifCond user.role "superadmin"}}
                 <li>
                     <a href="/user" class="waves-effect"><i class="ti-key"></i>
                         <span>Pengguna</span>
@@ -39,6 +39,17 @@
                 <li>
                     <a href="/setting" class="waves-effect"><i class="ti-settings"></i>
                         <span>Pengaturan</span>
+                    </a>
+                </li>
+                {{else}}
+                <li>
+                    <a href="/dashboard" class="waves-effect"><i class="ti-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/vote" class="waves-effect"><i class="ti-files"></i>
+                        <span>Perhitungan Suara</span>
                     </a>
                 </li>
                 {{/ifCond}}
