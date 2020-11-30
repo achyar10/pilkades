@@ -84,20 +84,20 @@
                         {{/ifNotEq}}
                         {{/each}}
                         <tr>
+                            <td colspan="3" class="text-center middle text-success font-weight-bold" style="font-size: 25px;">Total Suara Sah</td>
+                            <td>
+                                <div class="percentext">100%</div>
+                                <div class="text-right">{{totalVote}} suara</div>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="3" class="text-center middle text-warning font-weight-bold" style="font-size: 25px;">Suara Tidak Sah</td>
                             <td>
                             <div class="percentext text-warning">{{invalidPercent}}%</div>
                             <div class="text-right">{{invalidVote}} suara</div>
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="3" class="text-center middle text-success font-weight-bold"
-                                style="font-size: 25px;">TOTAL</td>
-                            <td>
-                                <div class="percentext">100%</div>
-                                <div class="text-right">{{totalVote}} suara</div>
-                            </td>
-                        </tr>
+                        
                     </table>
                 </div>
             </div>
@@ -142,16 +142,16 @@
                 <tbody>
                     {{#each api}}
                         <tr>
-                            <td rowspan="{{Length candidates}}" class="align-middle">{{inc @index}}</td>
-                            <td rowspan="{{Length candidates}}" class="align-middle">
+                            <td rowspan="{{ math (Length candidates) "+" 1 }}" class="align-middle">{{inc @index}}</td>
+                            <td rowspan="{{ math (Length candidates) "+" 1 }}" class="align-middle">
                                 {{no_tps}} <br>
                                 {{#ifNotEq plano null}}
                                     <a href="{{plano}}" target="_blank" class="btn btn-sm btn-info">Plano</a>
                                 {{/ifNotEq}}
                             </td>
-                            <td rowspan="{{Length candidates}}" class="text-center align-middle">{{numberFormat total_dpt}}</td>
-                            <td rowspan="{{Length candidates}}" class="text-center align-middle">{{numberFormat absen}}</td>
-                            <td rowspan="{{Length candidates}}" class="text-center align-middle">{{numberFormat total_suara}}</td>
+                            <td rowspan="{{ math (Length candidates) "+" 1 }}" class="text-center align-middle">{{numberFormat total_dpt}}</td>
+                            <td rowspan="{{ math (Length candidates) "+" 1 }}" class="text-center align-middle">{{numberFormat absen}}</td>
+                            <td rowspan="{{ math (Length candidates) "+" 1 }}" class="text-center align-middle">{{numberFormat total_suara}}</td>
                             {{#each candidates}}
                                 {{#ifNotEq no_urut 99}}
                                     <td>No {{no_urut}}</td>
@@ -164,8 +164,13 @@
                                     <td class="text-center font-weight-bold">{{percent}}%</td>
                                     </tr>
                                 {{else}}
+                                    <td colspan="2" class="text-center text-success">Total Suara Sah</td>
+                                    <td {{#if ../../settings.app_gender}} colspan="3" {{/if}} class="text-center font-weight-bold text-success">{{numberFormat grand_total}}</td>
+                                    <td class="text-center font-weight-bold text-success">{{grand_total_percent}}%</td>
+                                    </tr>
                                     <td colspan="2" class="text-center text-danger">Total {{name}}</td>
-                                    <td {{#if ../../settings.app_gender}} colspan="3" {{/if}} class="text-center font-weight-bold text-danger">{{numberFormat total_suara}}</td>
+                                    <td {{#if ../../settings.app_gender}} colspan="3" {{/if}} class="text-center font-weight-bold text-danger">
+                                        {{numberFormat total_suara}}</td>
                                     <td class="text-center font-weight-bold text-danger">{{percent}}%</td>
                                     </tr>
                                 {{/ifNotEq}}

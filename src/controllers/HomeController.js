@@ -4,6 +4,9 @@ class HomeController {
 
     index = async (req, res) => {
         try {
+            if (req.user.role == 'admin') {
+                return res.redirect('/vote');
+            }
             const [candidate, tps, invalid, valid] = await Promise.all([
                 model.candidate.count({ where: { isBlank: false } }),
                 model.tps.count({}),
