@@ -105,5 +105,51 @@ class TpsController {
         }
     }
 
+    plano = async (req, res) => {
+        try {
+            const tps = await model.tps.findOne({ where: { id: req.user.tpsId }, raw: true })
+            if (!tps) return res.redirect('/dashboard')
+            res.render('plano', {
+                title: 'Upload Plano',
+                csrf: req.csrfToken(),
+                tps
+            })
+        } catch (error) {
+            console.log(error)
+            res.redirect('/dashboard')
+        }
+    }
+
+    uploadPlano = async (req, res) => {
+        try {
+            let updated = {}
+            if (req.files.plano.name !== '') {
+                const nameImage = new Date().getTime()
+                const upload = await v2.uploader.upload(req.files.plano.tempFilePath, {
+                    folder: 'pilkades/plano',
+                    quality: "auto:low",
+                    public_id: nameImage,
+                    format: 'png',
+                    overwrite: true
+                })
+                updated = { plano: upload.secure_url }
+            }
+            model.tps.update(updated, { where: { id: req.user.tpsId } })
+                .then(() => {
+                    req.flash('success_msg', "Upload Plano berhasil");
+                    res.redirect('/plano')
+                })
+                .catch((err) => {
+                    console.log(err)
+                    req.flash('error_msg', "Upload Plano gagal");
+                    res.redirect('/plano')
+                })
+        } catch (error) {
+            console.log(error)
+            req.flash('error_msg', "Upload Plano gagal");
+            res.redirect('/plano')
+        }
+    }
+
 }
 export default new TpsController()

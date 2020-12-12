@@ -57,6 +57,10 @@ router.route('/vote/add').post(isAuth, VoteController.create)
 router.route('/vote/edit/:id').get(isAuth, VoteController.edit)
 router.route('/vote/edit/:id').post(isAuth, VoteController.change)
 
+// Plano
+router.route('/plano').get(isAuth, TpsController.plano)
+router.route('/plano').post(isAuth, TpsController.uploadPlano)
+
 // Users
 router.route('/user').get(isAuth, UserController.index)
 router.route('/user/add').get(isAuth, UserController.add)
