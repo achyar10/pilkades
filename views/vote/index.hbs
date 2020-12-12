@@ -3,8 +3,14 @@
         <div class="col-sm-12">
             <h3>{{title}}
                 <div class="float-right">
-                    <a href="/vote/add" class="btn btn-block btn-danger"><i class="fa fa-plus"></i>
+                    <a href="/vote/add" class="btn btn-danger"><i class="fa fa-plus"></i>
                         Hitung Suara</a>
+                    {{#ifCond user.role "superadmin"}}
+                    <a href="/vote/removeall" class="btn btn-warning"
+                        onclick="return confirm('Semua Data perhitungan akan dihilangkan, setuju?')"><i
+                            class="fa fa-trash"></i>
+                        Reset Hitung Suara</a>
+                    {{/ifCond}}
                 </div>
             </h3>
         </div>

@@ -127,5 +127,26 @@ class VoteController {
         }
     }
 
+    removeAll = (req, res) => {
+        try {
+            if (req.user.role == 'admin') {
+                return res.redirect('/vote');
+            }
+            model.vote.destroy({ truncate: true, cascade: false })
+                .then(() => {
+                    req.flash('success_msg', "Reset data perhitungan berhasil");
+                    res.redirect('/vote')
+                })
+                .catch((err) => {
+                    console.log(err)
+                    req.flash('error_msg', "Reset data perhitungan gagal");
+                    res.redirect('/vote')
+                })
+        } catch (error) {
+            console.log(error)
+            res.redirect('/dashboard')
+        }
+    }
+
 }
 export default new VoteController()

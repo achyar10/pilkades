@@ -51,6 +51,7 @@ router.route('/candidate/edit/:id').post(isAuth, CandidateController.change)
 
 // Vote
 router.route('/vote').get(isAuth, VoteController.index)
+router.route('/vote/removeall').get(isAuth, VoteController.removeAll)
 router.route('/vote/add').get(isAuth, VoteController.add)
 router.route('/vote/add').post(isAuth, VoteController.create)
 router.route('/vote/edit/:id').get(isAuth, VoteController.edit)
