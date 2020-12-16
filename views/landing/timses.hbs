@@ -42,6 +42,9 @@
             </div>
             <div class="col-md-8 text-center">
                 <h5>Hasil Hitung TPS</h5>
+                <div id="empty">
+                    <h2 class="text-info" style="margin-top: 200px;">Data Belum Tersedia</h2>
+                </div>
                 <div id="chart"></div>
             </div>
         </div>
@@ -78,6 +81,11 @@
                     url: '/api/candidates',
                     success: (response) => {
                         let pie = []
+                        if(response.totalVote > 0) {
+                            $('#empty').hide()
+                        } else {
+                            $('#empty').show()
+                        }
                         $('#dataIn').text(response.tpsData.tps_vote)
                         $('#totalTps').text(response.tpsData.total_tps)
                         $('.progress').html(/*html*/`<div class="progress-bar bg-success" role="progressbar" style="width: ${response.tpsData.percent}%;"
