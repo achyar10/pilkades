@@ -48,7 +48,7 @@
                 {{/if}}
                 <div class="form-group">
                     <label>Total Suara</label>
-                    <input type="text" name="numberOfVote" id="numberOfVote" class="form-control" placeholder="Jumlah perolehan suara" {{#if settings.app_gender}} readonly="" {{/if}}>
+                    <input type="text" name="numberOfVote" id="numberOfVote" class="form-control" placeholder="Jumlah perolehan suara" {{#ifCond settings.app_gender true}} readonly="" {{/ifCond}}>
                 </div>
             </div>
             <div class="col-md-3">
