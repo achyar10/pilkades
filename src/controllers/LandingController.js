@@ -56,6 +56,9 @@ class LandingController {
 
     timses = async (req, res) => {
         try {
+            if (res.locals.settings.app_type === 'panitia') {
+                return res.redirect('/')
+            }
             return res.render('landing/timses', {
                 title: `Portal ${res.locals.settings.app_name}`,
                 layout: false
