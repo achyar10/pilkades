@@ -54,6 +54,61 @@ class LandingController {
         }
     }
 
+    timses = async (req, res) => {
+        try {
+            return res.render('landing/timses', {
+                title: `Portal ${res.locals.settings.app_name}`,
+                layout: false
+            })
+        } catch (error) {
+            console.log(error)
+            res.redirect('/')
+        }
+    }
+
+    detailCandidate = async (req, res) => {
+        try {
+            const [tpsTotal, tpsVote, totalVote, votes, candidates, invalidVote] = await Promise.all([
+                model.tps.count({}),
+                model.vote.count({ group: ['tpsId'] }),
+                model.vote.sum('numberOfVote', { where: { candidateId: { [Op.not]: 1 } } }),
+                model.vote.findAll({
+                    where: { candidateId: { [Op.not]: 1 } },
+                    attributes: [
+                        'candidateId',
+                        [model.Sequelize.fn('SUM', model.Sequelize.col('numberOfVote')), 'total_vote'],
+                    ], group: ['candidateId'], raw: true
+                }),
+                model.candidate.findAll({ where: { id: { [Op.not]: 1 } }, attributes: ['id', 'no_urut', 'name', 'image'], order: [['no_urut', 'ASC']], raw: true, nest: true }),
+                model.vote.sum('numberOfVote', { where: { candidateId: 1 } }),
+            ])
+            const tpsData = {
+                total_tps: tpsTotal,
+                tps_vote: tpsVote.length,
+                percent: parseInt((tpsVote.length / tpsTotal) * 100)
+            }
+            const invalidPercent = parseFloat((invalidVote / totalVote || 0) * 100).toFixed(1)
+            candidates.map(el => {
+                let total_vote = 0
+                for (const vote of votes) {
+                    if (vote.candidateId == el.id) {
+                        total_vote += parseInt(vote.total_vote)
+                    }
+                }
+                el.total_vote = total_vote
+                el.percent = parseFloat((total_vote / totalVote || 0) * 100).toFixed(1)
+            })
+            return res.json({
+                candidates,
+                totalVote: totalVote || 0,
+                invalidPercent, invalidVote, tpsData
+            })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json('Server error!')
+        }
+    }
+
     detail = async (req, res) => {
         try {
             const districts = await model.district.findAll({
