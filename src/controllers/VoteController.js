@@ -25,7 +25,10 @@ class VoteController {
 
     add = async (req, res) => {
         try {
-            const candidates = await model.candidate.findAll({ attributes: ['id', 'no_urut', 'name'] })
+            const candidates = await model.candidate.findAll({
+                attributes: ['id', 'no_urut', 'name'],
+                order: [['no_urut', 'ASC']]
+            })
             const tps = await model.tps.findAll({ attributes: ['id', 'no_tps'] })
             res.render('vote/add', {
                 title: 'Tambah Perhitungan Suara',

@@ -18,7 +18,7 @@
                     <select name="tpsId" class="form-control" required="">
                         <option value="">---Pilih TPS---</option>
                         {{#each tps}}
-                            <option value="{{id}}">{{no_tps}}</option>
+                        <option value="{{id}}">{{no_tps}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -28,7 +28,7 @@
                     <select name="candidateId" class="form-control candidateId" onchange="invalid()" required="">
                         <option value="">---Pilih Calon---</option>
                         {{#each candidates}}
-                            <option value="{{id}}">{{name}}</option>
+                        <option value="{{id}}">{{#ifCond no_urut 99}}{{name}}{{else}}No {{no_urut}} - {{name}}{{/ifCond}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -36,19 +36,21 @@
                 <div id="gender">
                     <div class="form-group">
                         <label>Jumlah Suara Laki-laki <span class="text-danger">*</span></label>
-                        <input type="number" name="male" id="male" class="form-control" placeholder="Jumlah perolehan suara" min="0"
-                            required="" oninput="sumTotal()" value="0">
+                        <input type="number" name="male" id="male" class="form-control"
+                            placeholder="Jumlah perolehan suara" min="0" required="" oninput="sumTotal()" value="0">
                     </div>
                     <div class="form-group">
                         <label>Jumlah Suara Perempuan <span class="text-danger">*</span></label>
-                        <input type="number" name="female" id="female" class="form-control" placeholder="Jumlah perolehan suara" min="0"
-                            required="" value="0" oninput="sumTotal()">
+                        <input type="number" name="female" id="female" class="form-control"
+                            placeholder="Jumlah perolehan suara" min="0" required="" value="0" oninput="sumTotal()">
                     </div>
                 </div>
                 {{/if}}
                 <div class="form-group">
                     <label>Total Suara</label>
-                    <input type="text" name="numberOfVote" id="numberOfVote" class="form-control" placeholder="Jumlah perolehan suara" {{#ifCond settings.app_gender true}} readonly="" {{/ifCond}}>
+                    <input type="text" name="numberOfVote" id="numberOfVote" class="form-control"
+                        placeholder="Jumlah perolehan suara" autocomplete="off" {{#ifCond settings.app_gender true}} readonly=""
+                        {{/ifCond}}>
                 </div>
             </div>
             <div class="col-md-3">
@@ -61,27 +63,30 @@
 
 <script>
 
-const male = document.getElementById('male')
-const female = document.getElementById('female')
-const total = document.getElementById('numberOfVote')
-const candidateId = document.querySelector('.candidateId')
-const gender = document.querySelector('#gender')
+    const male = document.getElementById('male')
+    const female = document.getElementById('female')
+    const total = document.getElementById('numberOfVote')
+    const candidateId = document.querySelector('.candidateId')
+    const gender = document.querySelector('#gender')
+    const setting = {{ settings.app_gender }}
 
-function invalid() {
-    if(candidateId.value == 1) {
-        total.readOnly = false
-        gender.style.display = 'none'
-    } else {
-        total.readOnly = true
-        gender.style.display = 'block'
+    function invalid() {
+        if (setting == 1) {
+            if (candidateId.value == 1) {
+                total.readOnly = false
+                gender.style.display = 'none'
+            } else {
+                total.readOnly = true
+                gender.style.display = 'block'
+            }
+        }
     }
-}
 
-function sumTotal() {
-    const totalMale = parseInt(male.value)
-    const totalFemale = parseInt(female.value)
-    const sum = totalMale + totalFemale
-    return total.value = sum || 0
-}
+    function sumTotal() {
+        const totalMale = parseInt(male.value)
+        const totalFemale = parseInt(female.value)
+        const sum = totalMale + totalFemale
+        return total.value = sum || 0
+    }
 
 </script>
