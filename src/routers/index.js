@@ -27,8 +27,8 @@ router.route('/logout').get(isAuth, AuthController.logout)
 // Profile
 router.route('/profile').get(isAuth, ProfileController.get)
 router.route('/profile/edit').get(isAuth, ProfileController.edit)
-// router.route('/profile/cpw').post(isAuth, ProfileController.cpw)
-// router.route('/profile/edit').post(isAuth, ProfileController.editProcess)
+router.route('/profile/cpw').post(isAuth, ProfileController.cpw)
+router.route('/profile/edit').post(isAuth, ProfileController.editProcess)
 
 // District
 router.route('/district').get(isAuth, DistrictController.index)

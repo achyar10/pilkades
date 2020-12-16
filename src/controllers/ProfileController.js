@@ -13,19 +13,18 @@ class ProfileController {
         })
     }
 
-    // cpw = (req, res) => {
-    //     try {
-    //         Users.findOneAndUpdate({ _id: req.user._id }, { $set: { password: bcrypt.hashSync(req.body.password, 10) } }, (err) => {
-    //             if (err) {
-    //                 res.redirect('/dashboard')
-    //             }
-    //             req.flash('success_msg', "Ubah sandi berhasil");
-    //             res.redirect('/profile')
-    //         })
-    //     } catch (error) {
-    //         res.redirect('/dashboard')
-    //     }
-    // }
+    cpw = async (req, res) => {
+        try {
+            const update = await model.user.update({ password: bcrypt.hashSync(req.body.password, 10) }, { where: { id: req.user.id } })
+            if (update[0] == 1) {
+                req.flash('success_msg', "Ubah sandi berhasil");
+                return res.redirect('/profile')
+            }
+            return res.redirect('/profile')
+        } catch (error) {
+            res.redirect('/vote')
+        }
+    }
 
     edit = async (req, res) => {
         try {
@@ -40,24 +39,24 @@ class ProfileController {
                 })
             }
         } catch (error) {
+            console.log(error)
             res.redirect('/profile')
         }
     }
 
-    // editProcess = (req, res) => {
-    //     try {
-    //         Users.findOneAndUpdate({ _id: req.user._id }, req.body, { new: true }, (err) => {
-    //             if (err) {
-    //                 res.redirect('/profile/edit')
-    //             } else {
-    //                 req.flash('success_msg', "Edit profile berhasil");
-    //                 res.redirect('/profile')
-    //             }
-    //         })
-    //     } catch (error) {
-    //         res.redirect('/profile')
-    //     }
-    // }
+    editProcess = async (req, res) => {
+        try {
+            const update = await model.user.update({ fullname: req.body.fullname }, { where: { id: req.user.id } })
+            if (update[0] == 1) {
+                req.flash('success_msg', "Ubah data berhasil");
+                return res.redirect('/profile')
+            }
+            return res.redirect('/profile')
+        } catch (error) {
+            console.log(error)
+            res.redirect('/profile')
+        }
+    }
 
 
 }
