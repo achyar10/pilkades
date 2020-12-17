@@ -35,7 +35,7 @@ class VoteController {
                     raw: true
                 })
                 const vote = await model.vote.findAll({
-                    where: { userId: req.user.id },
+                    where: { userId: req.user.tpsId },
                     attributes: ['candidateId', 'numberOfVote'],
                     raw: true
                 })
