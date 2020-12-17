@@ -1,4 +1,5 @@
 import model from '../models'
+import { Op } from 'sequelize'
 class VoteController {
 
     index = async (req, res) => {
@@ -25,15 +26,43 @@ class VoteController {
 
     add = async (req, res) => {
         try {
-            const candidates = await model.candidate.findAll({
-                attributes: ['id', 'no_urut', 'name'],
-                order: [['no_urut', 'ASC']]
-            })
-            const tps = await model.tps.findAll({ attributes: ['id', 'no_tps'] })
+            let candidates = []
+            let remainDpt = 0
+            if (req.user.role === 'admin') {
+                const tps = await model.tps.findOne({
+                    where: { id: req.user.tpsId },
+                    attributes: ['total_dpt'],
+                    raw: true
+                })
+                const vote = await model.vote.findAll({
+                    where: { userId: req.user.id },
+                    attributes: ['candidateId', 'numberOfVote'],
+                    raw: true
+                })
+                let arrId = [], total = 0
+                vote.map(el => {
+                    arrId.push(el.candidateId)
+                    total += el.numberOfVote
+                })
+                remainDpt = parseInt(tps.total_dpt) - total
+                candidates = await model.candidate.findAll({
+                    where: { id: { [Op.notIn]: arrId } },
+                    attributes: ['id', 'no_urut', 'name'],
+                    order: [['no_urut', 'ASC']],
+                    raw: true
+                })
+            } else {
+                candidates = await model.candidate.findAll({
+                    attributes: ['id', 'no_urut', 'name'],
+                    order: [['no_urut', 'ASC']],
+                    raw: true
+                })
+            }
+            const tps = await model.tps.findAll({ attributes: ['id', 'no_tps', 'total_dpt'] })
             res.render('vote/add', {
                 title: 'Tambah Perhitungan Suara',
                 csrf: req.csrfToken(),
-                candidates, tps
+                candidates, tps, remainDpt
             })
         } catch (error) {
             console.log(error)

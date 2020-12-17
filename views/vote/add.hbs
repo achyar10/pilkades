@@ -12,13 +12,17 @@
         <input type="hidden" name="_csrf" value="{{csrf}}">
         <div class="row">
             <div class="col-md-9">
+                <div class="form-group">
+                    <label for="">Sisa Suara/DPT yang Belum Terinput</label>
+                    <input type="text" id="remainDpt" class="form-control" value="{{remainDpt}}" readonly="">
+                </div>
                 {{#ifCond user.role "superadmin"}}
                 <div class="form-group">
                     <label>TPS <span class="text-danger">*</span></label>
-                    <select name="tpsId" class="form-control" required="">
+                    <select id="selectTps" name="tpsId" class="form-control" required="">
                         <option value="">---Pilih TPS---</option>
                         {{#each tps}}
-                        <option value="{{id}}">{{no_tps}}</option>
+                        <option value="{{id}}" data-dpt="{{total_dpt}}">{{no_tps}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -28,7 +32,8 @@
                     <select name="candidateId" class="form-control candidateId" onchange="invalid()" required="">
                         <option value="">---Pilih Calon---</option>
                         {{#each candidates}}
-                        <option value="{{id}}">{{#ifCond no_urut 99}}{{name}}{{else}}No {{no_urut}} - {{name}}{{/ifCond}}</option>
+                        <option value="{{id}}">{{#ifCond no_urut 99}}{{name}}{{else}}No {{no_urut}} -
+                            {{name}}{{/ifCond}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -48,9 +53,9 @@
                 {{/if}}
                 <div class="form-group">
                     <label>Total Suara</label>
-                    <input type="text" name="numberOfVote" id="numberOfVote" class="form-control"
-                        placeholder="Jumlah perolehan suara" autocomplete="off" {{#ifCond settings.app_gender true}} readonly=""
-                        {{/ifCond}}>
+                    <input type="number" name="numberOfVote" id="numberOfVote" class="form-control"
+                        placeholder="Jumlah perolehan suara" autocomplete="off" {{#ifCond settings.app_gender true}}
+                        readonly="" {{else}} oninput="grandTotal()" {{/ifCond}}>
                 </div>
             </div>
             <div class="col-md-3">
@@ -68,7 +73,16 @@
     const total = document.getElementById('numberOfVote')
     const candidateId = document.querySelector('.candidateId')
     const gender = document.querySelector('#gender')
+    const remainDpt = document.querySelector('#remainDpt')
     const setting = {{ settings.app_gender }}
+    const role = '{{ user.role }}'
+    let totalRemainDpt = parseInt(remainDpt.value)
+    if (role == 'superadmin') {
+        document.querySelector('#selectTps').onchange = function () {
+            totalRemainDpt = this.selectedOptions[0].getAttribute('data-dpt')
+            remainDpt.value = totalRemainDpt
+        }
+    }
 
     function invalid() {
         if (setting == 1) {
@@ -85,8 +99,14 @@
     function sumTotal() {
         const totalMale = parseInt(male.value)
         const totalFemale = parseInt(female.value)
-        const sum = totalMale + totalFemale
-        return total.value = sum || 0
+        const sum = totalMale + totalFemale || 0
+        remainDpt.value = totalRemainDpt - sum
+        return total.value = sum
+    }
+
+    function grandTotal() {
+        const sum = parseInt(total.value) || 0
+        return remainDpt.value = totalRemainDpt - sum
     }
 
 </script>
