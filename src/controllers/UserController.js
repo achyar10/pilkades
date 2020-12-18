@@ -125,7 +125,8 @@ class UserController {
             const raw = await model.user.findAll({
                 where: { role: { [Op.ne]: 'superadmin' } },
                 include: [{ model: model.tps, as: 'tps', attributes: ['no_tps'] }, { model: model.vote, as: 'votes', attributes: ['candidateId'] }],
-                attributes: ['id', 'username', 'fullname']
+                attributes: ['id', 'username', 'fullname'],
+                order: [['fullname', 'ASC']]
             })
             const data = JSON.parse(JSON.stringify(raw))
             data.map(el => {

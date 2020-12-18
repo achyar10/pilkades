@@ -8,16 +8,16 @@
         <table class="table table-sm myTable">
             <thead class="thead-dark">
                 <th>No</th>
-                <th>TPS</th>
                 <th>Nama Petugas</th>
+                <th>No TPS</th>
                 <th>Keterangan</th>
             </thead>
             <tbody>
                 {{#each data}}
                 <tr>
                     <td>{{inc @index}}</td>
-                    <td>{{tps.no_tps}}</td>
                     <td>{{fullname}}</td>
+                    <td>{{tps.no_tps}}</td>
                     <td>{{desc}}</td>
                 </tr>
                 {{/each}}
