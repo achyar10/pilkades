@@ -22,6 +22,10 @@ export default (sequelize, DataTypes) => {
         ]
     })
     user.associate = function (models) {
+        user.hasMany(models.vote, {
+            as: 'votes',
+            foreignKey: 'userId'
+        })
         user.belongsTo(models.tps, {
             as: 'tps'
         })

@@ -1,5 +1,6 @@
 import model from '../models'
 import bcrypt from 'bcrypt'
+import { Op } from 'sequelize'
 
 class UserController {
 
@@ -112,6 +113,28 @@ class UserController {
                     req.flash('error_msg', "Ubah data gagal");
                     res.redirect('/user')
                 })
+        } catch (error) {
+            console.log(error)
+            res.redirect('/dashboard')
+        }
+    }
+
+    votes = async (req, res) => {
+        try {
+            const totalCandidate = await model.candidate.count()
+            const raw = await model.user.findAll({
+                where: { role: { [Op.ne]: 'superadmin' } },
+                include: [{ model: model.tps, as: 'tps', attributes: ['no_tps'] }, { model: model.vote, as: 'votes', attributes: ['candidateId'] }],
+                attributes: ['id', 'username', 'fullname']
+            })
+            const data = JSON.parse(JSON.stringify(raw))
+            data.map(el => {
+                el.desc = (el.votes.length == totalCandidate) ? 'Selesai' : `Masih kurang ${totalCandidate - el.votes.length} inputan`
+            })
+            return res.render('user/votes', {
+                title: 'Hasil Perhitungan By Petugas',
+                data
+            })
         } catch (error) {
             console.log(error)
             res.redirect('/dashboard')

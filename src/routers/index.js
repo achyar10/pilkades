@@ -71,6 +71,7 @@ router.route('/user/edit/:id').get(isAuth, UserController.edit)
 router.route('/user/edit/:id').post(isAuth, UserController.change)
 router.route('/user/cpw/:id').get(isAuth, UserController.cpw)
 router.route('/user/cpw/:id').post(isAuth, UserController.cpwProcess)
+router.route('/user/votes').get(isAuth, UserController.votes)
 
 // Setting
 router.route('/setting').get(isAuth, SettingController.index)
