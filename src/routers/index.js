@@ -15,6 +15,8 @@ const router = express.Router()
 
 router.route('/').get(LandingController.index)
 router.route('/timses').get(LandingController.timses)
+router.route('/status').get(LandingController.status)
+router.route('/data').get(LandingController.statusData)
 router.route('/result/detail').get(LandingController.details)
 router.route('/api/candidates').get(LandingController.detailCandidate)
 

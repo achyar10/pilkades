@@ -210,6 +210,38 @@ class LandingController {
         }
     }
 
+    status = (req, res) => {
+        try {
+            return res.render('landing/status', {
+                title: 'Hasil Perhitungan By Petugas',
+                layout: false
+            })
+        } catch (error) {
+            console.log(error)
+            res.redirect('/')
+        }
+    }
+
+    statusData = async (req, res) => {
+        try {
+            const totalCandidate = await model.candidate.count()
+            const raw = await model.user.findAll({
+                where: { role: { [Op.ne]: 'superadmin' } },
+                include: [{ model: model.tps, as: 'tps', attributes: ['no_tps'] }, { model: model.vote, as: 'votes', attributes: ['candidateId'] }],
+                attributes: ['id', 'username', 'fullname'],
+                order: [['fullname', 'ASC']]
+            })
+            const data = JSON.parse(JSON.stringify(raw))
+            data.map(el => {
+                el.desc = (el.votes.length == totalCandidate) ? 'Selesai' : `Masih kurang ${totalCandidate - el.votes.length} inputan`
+            })
+            return res.json(data)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json('Internal server error!')
+        }
+    }
+
     numberFormat = (x) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
