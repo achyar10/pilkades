@@ -9,6 +9,9 @@ module.exports = function (passport) {
                 if (!user) {
                     return done(null, false, { message: 'Username tidak terdaftar' })
                 }
+                if (!user.isActive) {
+                    return done(null, false, { message: 'Username belum aktif' })
+                }
                 bcrypt.compare(password, user.password, (err, isMatch) => {
                     if (err) throw err
                     if (isMatch) {
